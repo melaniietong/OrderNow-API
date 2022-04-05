@@ -1,5 +1,8 @@
 CREATE DATABASE ordernow;
 
+DROP TABLE IF EXISTS orders CASCADE;
+DROP TABLE IF EXISTS items CASCADE;
+
 CREATE TABLE orders(
     order_id SERIAL PRIMARY KEY NOT NULL,
     submit_time TIMESTAMPTZ NOT NULL,
@@ -10,4 +13,11 @@ CREATE TABLE orders(
     order_name VARCHAR(255) NOT NULL,
     phone CHAR(10) NOT NULL,
     completed_time TIMESTAMPTZ
-)
+);
+
+CREATE TABLE items(
+    item_id SERIAL PRIMARY KEY NOT NULL,
+    order_id INT NOT NULL REFERENCES orders(order_id) ON DELETE CASCADE,
+    options VARCHAR(255),
+    quantity INT NOT NULL
+);

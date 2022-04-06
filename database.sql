@@ -17,7 +17,9 @@ CREATE TABLE orders(
 
 CREATE TABLE items(
     item_id SERIAL PRIMARY KEY NOT NULL,
-    order_id INT NOT NULL REFERENCES orders(order_id) ON DELETE CASCADE,
+    item_num INT NOT NULL,
+    user_cookie INT NOT NULL,
+    order_id INT REFERENCES orders(order_id) ON DELETE CASCADE,
     options VARCHAR(255),
     quantity INT NOT NULL
 );

@@ -18,9 +18,19 @@ app.post("/orders", async(req, res) => {
     } catch (err) {
         console.error(err.message);
     }
-})
+});
 
 // Get all orders
+app.get("/orders", async(req, res) => {
+    try {
+        const allOrders = await pool.query(
+            "SELECT * FROM orders"
+        );
+        res.json(allOrders.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
 
 app.listen(4000, () => {
     console.log("Server running on port 4000...")

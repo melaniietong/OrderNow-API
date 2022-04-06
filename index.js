@@ -15,6 +15,7 @@ app.post("/orders", async(req, res) => {
             "INSERT INTO orders(submit_time, order_status, is_takeout, delivery_address, instructions, order_name, phone) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
             [submit_time, order_status, is_takeout, delivery_address, instructions, order_name, phone]
         );
+        res.json(newOrder.rows[0])
     } catch (err) {
         console.error(err.message);
     }

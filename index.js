@@ -20,6 +20,37 @@ app.post("/items", async(req, res) => {
     }
 });
 
+// Update an item
+app.put("/items/:id", async(req, res) => {
+    try {
+        const { id } = req.params;
+        const { options, quantity, order_id } = req.body;
+        if (options) {
+            await pool.query( 
+                "UPDATE items SET options = $1 WHERE item_id = $2",
+                [options, id]
+            );
+        }
+
+        if (quantity) {
+            await pool.query( 
+                "UPDATE items SET quantity = $1 WHERE item_id = $2",
+                [quantity, id]
+            );
+        }
+
+        if (order_id) {
+            await pool.query( 
+                "UPDATE items SET order_id = $1 WHERE item_id = $2",
+                [order_id, id]
+            );
+        }
+        res.json("Updated!");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
 // Create an order
 app.post("/orders", async(req, res) => {
     try {

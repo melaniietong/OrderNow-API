@@ -20,6 +20,20 @@ app.post("/items", async(req, res) => {
     }
 });
 
+// Get all items from a single user
+app.get("/items", async(req, res) => {
+    try {
+        const { user_cookie } = req.body;
+        const getItems = await pool.query(
+            "SELECT * FROM items WHERE user_cookie = $1",
+            [user_cookie]
+        );
+        res.json(getItems.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
 // Update an item
 app.put("/items/:id", async(req, res) => {
     try {

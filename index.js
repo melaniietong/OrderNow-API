@@ -59,7 +59,6 @@ app.put("/items/:id", async(req, res) => {
                 [order_id, id]
             );
         }
-        res.json("Updated!");
     } catch (err) {
         console.error(err.message);
     }
@@ -98,6 +97,29 @@ app.get("/orders", async(req, res) => {
             "SELECT * FROM orders"
         );
         res.json(allOrders.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// Update an order status
+app.put("/orders/:id", async(req, res) => {
+    try {
+        const { id } = req.params;
+        const { order_status, completed_time } = req.body;
+        if (order_status) {
+            await pool.query( 
+                "UPDATE orders SET order_status = $1 WHERE order_id = $2",
+                [order_status, id]
+            );
+        }
+
+        if (completed_time) {
+            await pool.query( 
+                "UPDATE orders SET completed_time = $1 WHERE order_id = $2",
+                [completed_time, id]
+            );
+        }
     } catch (err) {
         console.error(err.message);
     }

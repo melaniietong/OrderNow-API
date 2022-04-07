@@ -51,6 +51,18 @@ app.put("/items/:id", async(req, res) => {
     }
 });
 
+// Delete an item
+app.delete("/items/:id", async(req, res) => {
+    try {
+        const { id } = req.params;
+        const deleteItem = await pool.query(
+            "DELETE FROM items WHERE item_id = $1", [id]
+        );
+    } catch (err) {
+        console.error(err.message);  
+    }
+});
+
 // Create an order
 app.post("/orders", async(req, res) => {
     try {
